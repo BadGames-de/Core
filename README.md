@@ -18,3 +18,19 @@ Make working on plugins easier by using a code base with custom Inventory Manage
 
 ## OpenBoatPacketUtils
 A plugin that implements all packets from the "OpenBoatUtils" mod!
+<hr>
+
+# Maven Repo
+```xml
+<repository>
+  <id>badgames-releases</id>
+  <name>BadGames Repository</name>
+  <url>https://repo.badgames.de/releases</url>
+</repository>
+
+<dependency>
+  <groupId>de.badgames</groupId>
+  <artifactId>[NAME OF LIBRARY]</artifactId>
+  <version>0.1.47</version>
+</dependency>
+```
