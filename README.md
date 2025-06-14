@@ -31,6 +31,6 @@ A plugin that implements all packets from the "OpenBoatUtils" mod!
 <dependency>
   <groupId>de.badgames</groupId>
   <artifactId>[NAME OF LIBRARY]</artifactId>
-  <version>0.1.47</version>
+  <version>0.1.55</version>
 </dependency>
 ```
