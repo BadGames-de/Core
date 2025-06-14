@@ -7,6 +7,7 @@ import eu.cloudnetservice.driver.registry.ServiceRegistry;
 import eu.cloudnetservice.modules.bridge.BridgeServiceHelper;
 import eu.cloudnetservice.modules.bridge.player.PlayerManager;
 import eu.cloudnetservice.modules.bridge.player.executor.ServerSelectorType;
+import eu.cloudnetservice.wrapper.configuration.WrapperConfiguration;
 import net.kyori.adventure.text.TextComponent;
 
 import java.util.UUID;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class CloudNETHandler implements ICloudHandler {
     static BridgeServiceHelper bridgeServiceHelper = null;
     static PlayerManager playerManager = null;
+    static WrapperConfiguration wrapperConfiguration = null;
 
     @Override
     public void init() {
@@ -30,8 +32,13 @@ public class CloudNETHandler implements ICloudHandler {
     }
 
     @Override
+    public void setLobby() {
+        // CloudNET does not have a specific "Lobby" state.
+    }
+
+    @Override
     public String getServerName() {
-        return "";
+        return getWrapperConfiguration().serviceInfoSnapshot().name();
     }
 
     @Override
@@ -56,7 +63,8 @@ public class CloudNETHandler implements ICloudHandler {
                     .connectToGroup(group, ServerSelectorType.LOWEST_PLAYERS);
 
             return true;
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
 
         return false;
     }
@@ -68,7 +76,8 @@ public class CloudNETHandler implements ICloudHandler {
                     .connect(serverName);
 
             return true;
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
 
         return false;
     }
@@ -81,6 +90,8 @@ public class CloudNETHandler implements ICloudHandler {
     @Override
     public void setProperty(String key, String value) {
         // CloudNET does not support adding properties directly like this.
+
+        // Figure out how to do the property stuff since we now have access to it using the WrapperConfiguration.
     }
 
     @Override
@@ -103,7 +114,8 @@ public class CloudNETHandler implements ICloudHandler {
         if (bridgeServiceHelper == null) {
             try (InjectionLayer<Injector> injector = InjectionLayer.ext()) {
                 bridgeServiceHelper = injector.instance(BridgeServiceHelper.class);
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
 
         return bridgeServiceHelper;
@@ -114,9 +126,21 @@ public class CloudNETHandler implements ICloudHandler {
             try (InjectionLayer<Injector> injector = InjectionLayer.ext()) {
                 ServiceRegistry serviceRegistry = injector.instance(ServiceRegistry.class);
                 playerManager = serviceRegistry.firstProvider(PlayerManager.class);
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
 
         return playerManager;
+    }
+
+    private static WrapperConfiguration getWrapperConfiguration() {
+        if (wrapperConfiguration == null) {
+            try (InjectionLayer<Injector> injector = InjectionLayer.ext()) {
+                wrapperConfiguration = injector.instance(WrapperConfiguration.class);
+            } catch (Exception ignore) {
+            }
+        }
+
+        return wrapperConfiguration;
     }
 }

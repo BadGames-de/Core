@@ -4,7 +4,7 @@ A repository that mirrors all our core libraries!
 ## Notice
 This is a **MIRROR** of the libraries from our private repository.<br>
 We will only update this repo if there are major changes, the builds on our Repository are based on our private repo.<br>
-Code based on the release 0.1.47.
+Code based on the release 0.1.55.
 <hr>
 
 ## CloudHelper

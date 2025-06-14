@@ -28,6 +28,12 @@ public class BukkitHandler implements ICloudHandler {
     }
 
     @Override
+    public void setLobby() {
+        // Can't change.
+        Bukkit.getLogger().warning("You set the state to In Game!");
+    }
+
+    @Override
     public String getServerName() {
         return Bukkit.getServerName();
     }

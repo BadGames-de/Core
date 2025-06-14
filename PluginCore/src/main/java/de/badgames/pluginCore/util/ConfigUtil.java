@@ -329,4 +329,13 @@ public class ConfigUtil {
 
         return location;
     }
+
+    /**
+     * Reload the plugin's config file.
+     */
+    public static void reloadConfig() {
+        PluginCore.getInstance().getPlugin().reloadConfig();
+        locationsCache.clear(); // Clear the cache to reload locations
+        PluginCore.getInstance().getPlugin().getLogger().info("Config reloaded successfully.");
+    }
 }

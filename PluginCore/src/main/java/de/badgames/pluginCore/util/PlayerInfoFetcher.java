@@ -10,7 +10,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,14 +21,16 @@ import java.util.regex.Pattern;
  */
 public final class PlayerInfoFetcher {
 
-    private static final String UUID_URL = "https://api.mojang.com/users"
+    private static final String MOJANG_UUID_URL = "https://api.mojang.com/users"
             + "/profiles/minecraft/";
 
-    private static final Pattern UUID_PATTERN = Pattern.compile("\"id\"\\s*:\\s*\"(.*?)\"");
-
-    private static final String NAME_URL = "https://sessionserver.mojang.com"
+    private static final String MOJANG_NAME_URL = "https://sessionserver.mojang.com"
             + "/session/minecraft/profile/";
 
+    private static final String MINETOOLS_UUID_URL = "https://api.minetools.eu/uuid/";
+    private static final String MINETOOLS_NAME_URL = "https://api.minetools.eu/uuid/";
+
+    private static final Pattern UUID_PATTERN = Pattern.compile("\"id\"\\s*:\\s*\"(.*?)\"");
     private static final Pattern NAME_PATTERN = Pattern.compile(",\\s*\"name\"\\s*:\\s*\"(.*?)\"");
 
     private PlayerInfoFetcher() {
@@ -40,7 +44,23 @@ public final class PlayerInfoFetcher {
      * @return The UUID of the given player.
      */
     public static UUID getUUID(String name) {
-        String output = callURL(UUID_URL + name);
+        String output;
+
+        try {
+            output = callURL(MOJANG_UUID_URL + name);
+        } catch (Exception e) {
+            // If Mojang API fails, try Minetools
+            try {
+                output = callURL(MINETOOLS_UUID_URL + name);
+            } catch (Exception ex) {
+                Logger.getGlobal().warning("Failed to fetch player UUID for name: " + name);
+                return null;
+            }
+        }
+
+        if (output.isBlank()) {
+            return null;
+        }
         Matcher m = UUID_PATTERN.matcher(output);
         if (m.find()) {
             return UUID.fromString(insertDashes(m.group(1)));
@@ -95,7 +115,24 @@ public final class PlayerInfoFetcher {
      */
     public static String getName(String uuid) {
         uuid = uuid.replace("-", "");
-        String output = callURL(NAME_URL + uuid);
+        String output;
+
+        try {
+            output = callURL(MOJANG_NAME_URL + uuid);
+        } catch (Exception e) {
+            // If Mojang API fails, try Minetools
+            try {
+                output = callURL(MINETOOLS_NAME_URL + uuid);
+            } catch (Exception ex) {
+                Logger.getGlobal().warning("Failed to fetch player name for uuid: " + uuid);
+                return null;
+            }
+        }
+
+        if (output.isBlank()) {
+            return null;
+        }
+
         Matcher m = NAME_PATTERN.matcher(output);
         if (m.find()) {
             return m.group(1);
@@ -103,7 +140,7 @@ public final class PlayerInfoFetcher {
         return null;
     }
 
-    private static String callURL(String urlStr) {
+    private static String callURL(String urlStr) throws Exception {
         StringBuilder sb = new StringBuilder();
         URLConnection conn;
         BufferedReader br = null;
@@ -114,7 +151,7 @@ public final class PlayerInfoFetcher {
                 conn.setReadTimeout(60 * 1000);
             }
             if (conn != null && conn.getInputStream() != null) {
-                in = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                in = new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8);
                 br = new BufferedReader(in);
                 String line = br.readLine();
                 while (line != null) {
@@ -122,8 +159,6 @@ public final class PlayerInfoFetcher {
                     line = br.readLine();
                 }
             }
-        } catch (Throwable t) {
-            t.printStackTrace();
         } finally {
             if (br != null) {
                 try {

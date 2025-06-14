@@ -27,6 +27,12 @@ public class DefaultHandler implements ICloudHandler {
     }
 
     @Override
+    public void setLobby() {
+        // Can't change.
+        Logger.getGlobal().warning("You set the State to Lobby!");
+    }
+
+    @Override
     public String getServerName() {
         return "Default";
     }

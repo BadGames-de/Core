@@ -15,7 +15,7 @@ public class CloudHelper {
     protected static final Map<String, ICloudHandler> cloudHandlerClassMap =
             Map.of("eu.cloudnetservice.modules.bridge.BridgeServiceHelper", new CloudNETHandler(),
                     "eu.thesimplecloud.api.ICloudAPI", new SimpleCloudV2Handler(),
-                    "org.bukkit.Bukkit", new BukkitHandler());
+                    "cloud.timo.TimoCloud.api.TimoCloudAPI", new TimoCloudHandler());
 
     /**
      * <p>Initializes the CloudHelper and sets the cloud handler.<br>
@@ -24,9 +24,10 @@ public class CloudHelper {
      * <ul>
      *  <li>Default (no cloud, not Bukkit based(like Velocity or Bungeecord))</li>
      *  <li>Bukkit (no cloud)</li>
-     *  <li>CloudNet V4</li>
-     *  <li>SimpleCloud V2</li>
-     *  <li>SimpleCloud V3</li>
+     *  <li>TimoCloud - VERY slow updates and currently unstable</li>
+     *  <li>CloudNet V4 - Slow updates</li>
+     *  <li>SimpleCloud V2 - EoS (dropped support by official devs, so I won't deal with it.)</li>
+     *  <li>SimpleCloud V3 - Fast updates</li>
      * </ul>
      */
     public static void init() {
@@ -34,6 +35,11 @@ public class CloudHelper {
             Logger.getGlobal().warning("CloudHelper is already initialized!");
             return;
         }
+
+        if (System.getenv("SIMPLECLOUD_UNIQUE_ID") != null) {
+            cloudHandler = new SimpleCloudV3Handler();
+        }
+
         cloudHandlerClassMap.forEach((classPackage, handler) -> {
             if (cloudHandler != null) return;
             try {
@@ -45,9 +51,10 @@ public class CloudHelper {
         });
 
         if (cloudHandler == null) {
-            if (System.getenv("SIMPLECLOUD_UNIQUE_ID") != null) {
-                cloudHandler = new SimpleCloudV3Handler();
-            } else {
+            try {
+                Class.forName("org.bukkit.Bukkit");
+                cloudHandler = new BukkitHandler();
+            } catch (Exception ignore) {
                 cloudHandler = new DefaultHandler();
             }
         }
@@ -58,6 +65,7 @@ public class CloudHelper {
 
     /**
      * Returns the current cloud handler.
+     *
      * @return The current cloud handler.
      */
     public static ICloudHandler getCloudHandler() {

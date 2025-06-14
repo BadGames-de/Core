@@ -28,6 +28,11 @@ public class SimpleCloudV2Handler implements ICloudHandler {
     }
 
     @Override
+    public void setLobby() {
+        getCloudService().setState(ServiceState.VISIBLE);
+    }
+
+    @Override
     public String getServerName() {
         return getCloudService().getName();
     }

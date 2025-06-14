@@ -30,6 +30,11 @@ public class SimpleCloudV3Handler implements ICloudHandler {
     }
 
     @Override
+    public void setLobby() {
+        getControllerAPI().getServers().updateServerState(getUniqueId(), ServerState.AVAILABLE);
+    }
+
+    @Override
     public String getServerName() {
         return getServer(false).getGroup() + "-" + getServer(false).getNumericalId();
     }
@@ -65,6 +70,11 @@ public class SimpleCloudV3Handler implements ICloudHandler {
         return playerApi.connectPlayer(player, serverName).join() == CloudPlayerConnectResult.SUCCESS;
     }
 
+    /**
+     * SimpleCloud does not support setting the max players, so this method does nothing.
+     *
+     * @param maxPlayers The maximum number of players to set.
+     */
     @Override
     public void setMaxPlayers(int maxPlayers) {
         // Not supported by SimpleCloud

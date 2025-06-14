@@ -17,6 +17,12 @@ public interface ICloudHandler {
     void setInGame();
 
     /**
+     * Set the server to "Lobby"
+     * This method should be called when the server is ready to accept players.
+     */
+    void setLobby();
+
+    /**
      * Gets the name of the server.
      *
      * @return The name of the server.

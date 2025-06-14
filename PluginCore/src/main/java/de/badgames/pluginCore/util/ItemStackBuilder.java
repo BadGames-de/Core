@@ -23,7 +23,6 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * A simple builder class for the ItemStack

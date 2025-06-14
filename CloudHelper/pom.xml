@@ -116,6 +116,12 @@
         </dependency>
         <dependency>
             <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>wrapper-jvm</artifactId>
+            <version>4.0.0-RC9</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
             <artifactId>platform-inject-api</artifactId>
             <version>4.0.0-RC9</version>
             <scope>provided</scope>
@@ -142,6 +148,12 @@
             <groupId>app.simplecloud.controller</groupId>
             <artifactId>controller-api</artifactId>
             <version>0.0.30-dev.1748933</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cloud.timo.timocloud</groupId>
+            <artifactId>TimoCloud-API</artifactId>
+            <version>6.7.9</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
