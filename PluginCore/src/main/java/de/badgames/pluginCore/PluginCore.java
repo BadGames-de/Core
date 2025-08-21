@@ -27,7 +27,7 @@ public class PluginCore {
 
     public static void init(JavaPlugin plugin) {
         instance = new PluginCore();
-        instance.screens = new Screens();
+        instance.screens = new Screens(plugin);
         instance.plugin = plugin;
 
         plugin.getLogger().info(" ");

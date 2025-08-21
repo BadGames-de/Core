@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class TaskManager {
 
     private final ArrayList<Runnable> toRun = new ArrayList<>();
+    private final ArrayList<Runnable> runOnce = new ArrayList<>();
     private final ArrayList<Runnable> toRemove = new ArrayList<>();
 
     public void initTask(JavaPlugin javaPlugin) {
@@ -18,6 +19,12 @@ public class TaskManager {
 
                 for (Runnable rem : toRemove) {
                     toRun.remove(rem);
+                    runOnce.remove(rem);
+                }
+
+                for (Runnable rem : runOnce) {
+                    rem.run();
+                    toRemove.add(rem);
                 }
 
                 for (Runnable runnable : toRun) {
@@ -30,6 +37,10 @@ public class TaskManager {
 
     public void inject(Runnable runnable) {
         toRun.add(runnable);
+    }
+
+    public void runOnce(Runnable runnable) {
+        runOnce.add(runnable);
     }
 
     public void uninject(Runnable runnable) {

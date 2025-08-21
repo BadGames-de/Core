@@ -6,6 +6,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtil {
 
+    public static void clearInventory(Player player) {
+        player.getInventory().setHelmet(null);
+        player.getInventory().setChestplate(null);
+        player.getInventory().setLeggings(null);
+        player.getInventory().setBoots(null);
+        player.getInventory().setItemInOffHand(null);
+        player.getInventory().setExtraContents(null);
+
+        player.getInventory().clear();
+    }
+
     public static boolean hasEnoughItems(Player player, XMaterial material, int amount) {
         int count = 0;
         for (ItemStack item : player.getInventory()) {

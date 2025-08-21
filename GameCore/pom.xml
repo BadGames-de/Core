@@ -10,15 +10,15 @@
     <parent>
         <groupId>de.badgames</groupId>
         <artifactId>BadGames-System</artifactId>
-        <version>0.1.47</version>
+        <version>0.1.59</version>
     </parent>
+
+    <name>GameCore</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <targetJavaVersion>17</targetJavaVersion>
     </properties>
-
-    <name>GameCore</name>
 
     <build>
         <defaultGoal>clean package</defaultGoal>

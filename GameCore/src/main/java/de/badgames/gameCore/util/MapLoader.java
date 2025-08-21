@@ -22,12 +22,24 @@ public class MapLoader<T extends GenericMap> {
      */
     private final HashMap<T, YamlConfiguration> mapConfigs = new HashMap<>();
 
+    private final boolean ignoreEmpty;
+
     /**
      * The map loader constructor.
      * @param plugin The plugin instance
      * @param clazz The class of the map
      */
     public MapLoader(JavaPlugin plugin, Class<T> clazz) {
+        this(plugin, clazz, false);
+    }
+
+    /**
+     * The map loader constructor.
+     * @param plugin The plugin instance
+     * @param clazz The class of the map
+     */
+    public MapLoader(JavaPlugin plugin, Class<T> clazz, boolean ignoreEmpty) {
+        this.ignoreEmpty = ignoreEmpty;
         loadAllMaps(plugin, clazz);
     }
 
@@ -49,7 +61,7 @@ public class MapLoader<T extends GenericMap> {
 
         File[] mapFiles = mapsFolder.listFiles();
 
-        if (mapFiles == null || mapFiles.length == 0) {
+        if (mapFiles == null || mapFiles.length == 0 && !ignoreEmpty) {
             throw new NullPointerException("No maps found in maps folder");
         }
 

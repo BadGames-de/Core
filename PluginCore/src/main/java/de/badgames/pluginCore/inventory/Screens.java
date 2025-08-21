@@ -2,8 +2,10 @@ package de.badgames.pluginCore.inventory;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +14,11 @@ import java.util.Arrays;
 public class Screens {
 
     private final ArrayList<CScreen> registered = new ArrayList<>();
+    private final NamespacedKey itemIdentifier;
+
+    public Screens(JavaPlugin plugin) {
+        itemIdentifier = NamespacedKey.fromString("screen_citem_identifier", plugin);
+    }
 
     public void register(CScreen... screens) {
         registered.addAll(Arrays.asList(screens));

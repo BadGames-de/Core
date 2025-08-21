@@ -10,7 +10,7 @@
     <parent>
         <groupId>de.badgames</groupId>
         <artifactId>BadGames-System</artifactId>
-        <version>0.1.47</version>
+        <version>0.1.59</version>
     </parent>
 
     <properties>
@@ -81,17 +81,16 @@
 
     <repositories>
         <repository>
-            <id>badgames-releases</id>
-            <name>BadGames Repository</name>
-            <url>https://repo.badgames.de/releases</url>
-        </repository>
-        <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>cloudnet-releases</id>
+            <url>https://repo.cloudnetservice.eu/repository/releases/</url>
         </repository>
         <repository>
             <id>simplecloud-repo</id>
@@ -108,30 +107,15 @@
     </repositories>
 
     <dependencies>
+        <!-- SimpleCloud V3 -->
         <dependency>
-            <groupId>eu.cloudnetservice.cloudnet</groupId>
-            <artifactId>bridge</artifactId>
-            <version>4.0.0-RC9</version>
+            <groupId>app.simplecloud.controller</groupId>
+            <artifactId>controller-api</artifactId>
+            <version>0.0.30-dev.1748933</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>eu.cloudnetservice.cloudnet</groupId>
-            <artifactId>wrapper-jvm</artifactId>
-            <version>4.0.0-RC9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>eu.cloudnetservice.cloudnet</groupId>
-            <artifactId>platform-inject-api</artifactId>
-            <version>4.0.0-RC9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.github.paperspigot</groupId>
-            <artifactId>paperspigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+
+        <!-- SimpleCloud V2 -->
         <dependency>
             <groupId>eu.thesimplecloud.simplecloud</groupId>
             <artifactId>simplecloud-plugin</artifactId>
@@ -144,16 +128,40 @@
             <version>0.0.1-dev.d1b6e59</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- CloudNET V4 -->
         <dependency>
-            <groupId>app.simplecloud.controller</groupId>
-            <artifactId>controller-api</artifactId>
-            <version>0.0.30-dev.1748933</version>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>bridge-api</artifactId>
+            <version>4.0.0-RC13</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>wrapper-jvm-api</artifactId>
+            <version>4.0.0-RC13</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.cloudnetservice.cloudnet</groupId>
+            <artifactId>platform-inject-api</artifactId>
+            <version>4.0.0-RC13</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- TimoCloud -->
         <dependency>
             <groupId>cloud.timo.timocloud</groupId>
             <artifactId>TimoCloud-API</artifactId>
             <version>6.7.9</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Minecraft -->
+        <dependency>
+            <groupId>org.github.paperspigot</groupId>
+            <artifactId>paperspigot-api</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

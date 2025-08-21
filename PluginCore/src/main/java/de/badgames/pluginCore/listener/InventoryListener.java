@@ -48,7 +48,11 @@ public class InventoryListener implements Listener {
             CItem item = screen.item(player, event.getSlot());
 
             if (item != null) {
-                event.setCancelled(item.click(new CClickEvent(player, event.getCurrentItem(), event.getSlot(), event.isShiftClick(), event.getClickedInventory())));
+                if (item.isMoveable()) {
+                    event.setCancelled(event.getSlot() >= event.getInventory().getSize() - 1);
+                } else {
+                    event.setCancelled(item.click(new CClickEvent(player, event.getCurrentItem(), event.getSlot(), event.isShiftClick(), event.getClickedInventory())));
+                }
             }
         }
     }

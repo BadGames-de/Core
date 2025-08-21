@@ -1,7 +1,9 @@
 package de.badgames.pluginCore.inventory;
 
+import de.badgames.pluginCore.PluginCore;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.function.Consumer;
 
@@ -11,9 +13,20 @@ public class CItem {
     private final ItemStack stack;
     private Consumer<CClickEvent> clickFunction;
     private boolean clickable = true;
+    @Getter
+    private boolean moveable = false;
 
     public CItem(ItemStack stack) {
         this.stack = stack;
+    }
+
+    public CItem addIdentifier(String identifier) {
+        if (this.stack.hasItemMeta()) {
+            var container = this.stack.getItemMeta().getPersistentDataContainer();
+            container.set(PluginCore.getInstance().getScreens().getItemIdentifier(), PersistentDataType.STRING, identifier);
+        }
+
+        return this;
     }
 
     public CItem onClick(Consumer<CClickEvent> clickFunction) {
@@ -28,6 +41,11 @@ public class CItem {
 
     public CItem clickable() {
         this.clickable = true;
+        return this;
+    }
+
+    public CItem moveable(boolean moveable) {
+        this.moveable = moveable;
         return this;
     }
 

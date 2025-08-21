@@ -7,13 +7,13 @@
     <artifactId>PluginCore</artifactId>
     <packaging>jar</packaging>
 
-    <name>PluginCore</name>
-
     <parent>
         <groupId>de.badgames</groupId>
         <artifactId>BadGames-System</artifactId>
-        <version>0.1.47</version>
+        <version>0.1.59</version>
     </parent>
+
+    <name>PluginCore</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -91,11 +91,6 @@
     </build>
 
     <repositories>
-        <repository>
-            <id>badgames-releases</id>
-            <name>BadGames Repository</name>
-            <url>https://repo.badgames.de/releases</url>
-        </repository>
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>

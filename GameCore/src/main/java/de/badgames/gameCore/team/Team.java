@@ -13,10 +13,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -187,6 +184,14 @@ public abstract class Team implements ConfigurationSerializable, PrefixGroup {
             }
         }
         return playerList;
+    }
+
+    /**
+     * Get the list of players in the team.
+     * @return an unchangeable list of all player UUIDs.
+     */
+    public List<UUID> getPlayersUUIDs() {
+        return Collections.unmodifiableList(players);
     }
 
     /**

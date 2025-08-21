@@ -2,9 +2,7 @@ package de.badgames.gameCore.util;
 
 import com.cryptomorin.xseries.XSound;
 import de.badgames.dbm.SQLWorker;
-import de.badgames.dbm.entities.Achievement;
-import de.badgames.dbm.entities.Stats;
-import de.badgames.dbm.entities.Title;
+import de.badgames.dbm.entities.*;
 import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -18,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -160,7 +159,7 @@ public class PlayerUtil {
         double toCheckY = locationToCheck.getY();
         double toCheckZ = locationToCheck.getZ();
 
-        return minY <= toCheckY && minX <= toCheckX && minZ <= toCheckZ && toCheckX <= maxX && toCheckZ <= maxZ && maxY <= toCheckY;
+        return minY <= toCheckY && minX <= toCheckX && minZ <= toCheckZ && toCheckX <= maxX && toCheckZ <= maxZ && toCheckY <= maxY;
     }
 
     /**
@@ -359,5 +358,35 @@ public class PlayerUtil {
             player.sendMessage(messageToSend);
             XSound.BLOCK_AMETHYST_CLUSTER_BREAK.play(player, 0.5f, 1f);
         }
+    }
+
+    public static List<InventoryBind> getInventoryBinds(Player player, String identifier) {
+        if (sqlWorker == null) {
+            log.error("SQLWorker not initialized.");
+        }
+
+        var list = sqlWorker.getInventoryBinds(player.getUniqueId().toString(), identifier);
+        if (list == null) {
+            return new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public static void setInventoryBind(Player player, String identifier, int itemId, int slot) {
+        if (sqlWorker == null) {
+            log.error("SQLWorker not initialized.");
+        }
+
+        sqlWorker.addInventoryBind(player.getUniqueId().toString(), identifier, itemId, slot);
+    }
+
+    public static long getCoins(Player player) {
+        if (sqlWorker == null) {
+            log.error("SQLWorker not initialized.");
+        }
+
+        Coins coins = sqlWorker.getCoins(player.getUniqueId().toString(), 1000);
+        return coins.getAmount();
     }
 }

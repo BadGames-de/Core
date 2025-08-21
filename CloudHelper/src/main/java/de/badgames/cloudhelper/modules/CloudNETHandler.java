@@ -125,7 +125,7 @@ public class CloudNETHandler implements ICloudHandler {
         if (playerManager == null) {
             try (InjectionLayer<Injector> injector = InjectionLayer.ext()) {
                 ServiceRegistry serviceRegistry = injector.instance(ServiceRegistry.class);
-                playerManager = serviceRegistry.firstProvider(PlayerManager.class);
+                playerManager = serviceRegistry.defaultInstance(PlayerManager.class);
             } catch (Exception ignore) {
             }
         }
