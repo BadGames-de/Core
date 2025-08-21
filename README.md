@@ -9,6 +9,24 @@ Code based on the release 0.1.59.
 
 ## CloudHelper
 Make working with different clouds easier!
+<details>
+  <summary>Supported Clouds</summary>
+
+### What is meant with Default and Bukkit?
+#### Default
+This implementation will be used when we couldn't determine the used Cloud BUT detected that current software is **NOT** based on Bukkit.
+#### Bukkit
+This implementation will be used when we couldn't determine the used Cloud BUT detected that current software is based on Bukkit.
+  
+| Name | setLobby | setIngame | setMOTD | getMOTD | getServerName | sendToGroup | sendToServer | sendToLobby | setMaxPlayers | getMaxPlayers | Properties | kickPlayer
+| ---------- | - | - | - | - | - | - | - | - | - | - | - | - |
+| Default | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Bukkit | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| Simple Cloud 2 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Simple Cloud 3 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| CloudNET 3 | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| TimoCloud | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+</details>
 
 ## GameCore
 Give your gamemodes a stable code base to make the experience even better!
@@ -31,6 +49,6 @@ A plugin that implements all packets from the "OpenBoatUtils" mod!
 <dependency>
   <groupId>de.badgames</groupId>
   <artifactId>[NAME OF LIBRARY]</artifactId>
-  <version>0.1.55</version>
+  <version>0.1.59</version>
 </dependency>
 ```
